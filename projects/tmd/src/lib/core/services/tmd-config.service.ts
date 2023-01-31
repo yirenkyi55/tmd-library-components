@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TmdThemeStyle, TmdThemeConfig, TmdStyleConfig } from '../models';
+import { TmdThemeStyle, TmdThemeConfig, TmdStyleConfig, TmdSideBarStatus } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +7,13 @@ import { TmdThemeStyle, TmdThemeConfig, TmdStyleConfig } from '../models';
 export class TmdConfigService {
   currentTheme: TmdThemeStyle = TmdThemeStyle.Blue;
   styleConfig: TmdThemeConfig = TmdStyleConfig;
+  sidebarIsOpened: boolean = false;
+
+  toggleSidebar(): void {
+    this.sidebarIsOpened = !this.sidebarIsOpened;
+  }
+
   mediumScreenBreakpoint = 768;
 
-  constructor() {}
+  constructor() { }
 }

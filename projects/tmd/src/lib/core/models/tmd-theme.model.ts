@@ -4,6 +4,11 @@ export enum TmdThemeStyle {
   Orange,
 }
 
+export enum TmdSideBarStatus {
+  Opened,
+  Closed
+}
+
 interface TmdStyleElement {
   blueClass: string;
   greenClass: string;
@@ -29,5 +34,5 @@ export const TmdStyleConfig: TmdThemeConfig = {
 };
 
 export interface TmdStyleTheme {
-    get styleTheme(): string;
-  }
+  get styleTheme(): string;
+}

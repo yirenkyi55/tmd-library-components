@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { TmdDashboardModule } from 'tmd';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TmdDashboardModule } from 'tmd';
 
 @NgModule({
   declarations: [AppComponent],
@@ -12,4 +13,4 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

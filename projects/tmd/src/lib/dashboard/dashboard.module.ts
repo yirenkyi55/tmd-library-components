@@ -16,9 +16,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     DashboardComponent,
     FooterComponent,
     SidebarComponent,
-    
+
   ],
   imports: [CommonModule, FontAwesomeModule, TmdModule],
   exports: [DashboardComponent],
 })
-export class TmdDashboardModule {}
+export class TmdDashboardModule { }
