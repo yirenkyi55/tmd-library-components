@@ -3,15 +3,19 @@ import { SearchInputComponent } from './components/search-input/search-input.com
 import { InputComponent } from './components/input/input.component';
 import { CommonModule } from '@angular/common';
 import { BelowMediumScreen, MediumScreen } from './core';
+import { PopoverComponent } from './components/popover/popover.component';
+import { TmdPopoverDirective } from './core/directives/tmd-popover.directive';
 
 @NgModule({
-  declarations: [    
+  declarations: [
     SearchInputComponent,
     InputComponent,
     MediumScreen,
-    BelowMediumScreen
+    BelowMediumScreen,
+    PopoverComponent,
+    TmdPopoverDirective
   ],
   imports: [CommonModule],
-  exports: [SearchInputComponent, MediumScreen, BelowMediumScreen],
+  exports: [SearchInputComponent, MediumScreen, BelowMediumScreen, TmdPopoverDirective, PopoverComponent],
 })
-export class TmdModule {}
+export class TmdModule { }

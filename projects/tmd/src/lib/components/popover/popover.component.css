@@ -1,0 +1,20 @@
+.popover-container {
+  padding: 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.16);
+
+  background-color: #fff;
+}
+
+#popoverTip::before { 
+    content: " ";
+    background-color: red;
+}
+
+#popoverTip::after { 
+  border-color: #e5e7eb;
+  border-style: solid;
+  background: inherit;
+    height: 9px;  
+    width: 9px;
+}
