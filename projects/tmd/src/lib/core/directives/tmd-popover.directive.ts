@@ -6,12 +6,14 @@ import {
     HostListener,
     TemplateRef,
     ViewContainerRef,
-    OnInit
+    OnInit,
+    Renderer2
 } from '@angular/core';
 
-import { Overlay, OverlayRef, ConnectedPosition } from '@angular/cdk/overlay';
-import { TmdPopoverService } from '../services/tmd-component.service';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TmdPopoverService } from '../services/tmd-popover.service';
 import { TemplatePortal } from '@angular/cdk/portal';
+import { TmdPopOverPositions } from '../models/popover.model';
 
 
 @Directive({
@@ -24,9 +26,7 @@ export class TmdPopoverDirective implements OnInit, OnDestroy {
     @Input() showOnHover: boolean = false;
     @Input() position: 'top' | 'bottom' | 'left' | 'right' = 'bottom';
 
-
     private overlayRef!: OverlayRef;
-
 
     get overLayIsAttached() {
         return this.overlayRef.hasAttached();
@@ -36,7 +36,8 @@ export class TmdPopoverDirective implements OnInit, OnDestroy {
         private elementRef: ElementRef,
         private overlay: Overlay,
         private viewContainerRef: ViewContainerRef,
-        private popOverService: TmdPopoverService) {
+        private popOverService: TmdPopoverService,
+        private renderer2: Renderer2) {
 
     }
 
@@ -44,9 +45,9 @@ export class TmdPopoverDirective implements OnInit, OnDestroy {
     hostClicked() {
         if (!this.showOnHover) {
             if (!this.overLayIsAttached) {
-                this.attachOverlayRef();
+                this.attachPopover();
             } else {
-                this.detachOverlayRef();
+                this.detachPopover();
             }
         }
     }
@@ -56,7 +57,7 @@ export class TmdPopoverDirective implements OnInit, OnDestroy {
         this.removeOverlayOnBackdropClick();
         this.popOverService.getPopoverState().subscribe(state => {
             if (state) {
-                this.detachOverlayRef();
+                this.detachPopover();
             }
         })
 
@@ -67,26 +68,15 @@ export class TmdPopoverDirective implements OnInit, OnDestroy {
         this.overlayRef.backdropClick()
             .subscribe(() => {
                 if (this.closeOnClickOutSide) {
-                    this.detachOverlayRef();
+                    this.detachPopover();
                 }
             });
     }
 
     private attachHoverEvents() {
         if (this.showOnHover) {
-            this.elementRef.nativeElement.addEventListener('mouseenter', () => {
-                if (!this.overLayIsAttached) {
-                    console.log('mouseenter');
-                    this.attachOverlayRef();
-                }
-
-            });
-
-            this.elementRef.nativeElement.addEventListener('mouseleave', () => {
-                if (this.overLayIsAttached) {
-                    this.detachOverlayRef();
-                }
-            });
+            this.renderer2.listen(this.elementRef.nativeElement, 'mouseenter', () => this.attachPopover());
+            this.renderer2.listen(this.elementRef.nativeElement, 'mouseleave', () => this.detachPopover());
         }
     }
 
@@ -102,77 +92,27 @@ export class TmdPopoverDirective implements OnInit, OnDestroy {
         });
     }
 
-
     private getPositionStrategy() {
         return this.overlay.position()
             .flexibleConnectedTo(this.elementRef)
-            .withPositions(this.popOverPositions[this.position]).withPush(false);
+            .withPositions(TmdPopOverPositions.popOverPositions[this.position]);
     }
 
-    private get popOverPositions() {
-        return {
-            'right': this.positionRight(),
-            'left': this.positionLeft(),
-            'top': this.positionTop(),
-            'bottom': this.positionBottom()
-        }
-    }
 
-    private positionBottom(): ConnectedPosition[] {
-        return [{
-            originX: 'center',
-            originY: 'bottom',
-            overlayX: 'center',
-            overlayY: 'top'
-        }];
-    }
-
-    private positionTop(): ConnectedPosition[] {
-        return [{
-            originX: 'center',
-            originY: 'top',
-            overlayX: 'center',
-            overlayY: 'bottom'
-        }];
-    }
-
-    private positionLeft(): ConnectedPosition[] {
-        return [
-            {
-                originX: 'start',
-                originY: 'center',
-                overlayX: 'end',
-                overlayY: 'center'
-            }
-        ];
-    }
-
-    private positionRight(): ConnectedPosition[] {
-        return [
-            {
-                originX: 'end',
-                originY: 'center',
-                overlayX: 'start',
-                overlayY: 'center'
-            }
-        ];
-    }
-
-    attachOverlayRef(): void {
+    attachPopover(): void {
         if (!this.overLayIsAttached) {
             this.overlayRef.attach(new TemplatePortal(this.tmdPopover, this.viewContainerRef));
         }
     }
 
-    detachOverlayRef(): void {
+    detachPopover(): void {
         if (this.overLayIsAttached) {
             this.overlayRef.detach();
         }
     }
 
     ngOnDestroy() {
-        this.detachOverlayRef();
+        this.detachPopover();
         this.overlayRef.dispose();
     }
-
 }

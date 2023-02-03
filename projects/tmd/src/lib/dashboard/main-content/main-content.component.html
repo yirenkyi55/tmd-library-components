@@ -1,16 +1,12 @@
-<div class="flex items-center justify-center mt-80">
-    <button [tmdPopover]="popoverVazio" [showOnHover]="true" position="bottom" class="bg-green-500 p-5">
-        Click to open
-    </button>
-</div>
+<button tmdTooltip="Open Modal" class="bg-green-500 p-5 text-white rounded-md m-5" (click)="openModal()">
+    Click to open
+</button>
 
-
-
-<ng-template #popoverVazio>
-    <tmd-popover>
-        <p>PopOver is the best</p>
-        <button mat-raised-button (click)="closeModal()">
-            Fechar Here to close
-        </button>
-    </tmd-popover>
-</ng-template>
+<tmd-select [required]="true" label="Destination" placeholder="Pick Your Holiday Destination">
+    <tmd-select-option key="1" value="Paris"></tmd-select-option>
+    <tmd-select-option key="2" value="Mauritius"></tmd-select-option>
+    <tmd-select-option key="3" value="Singapore"></tmd-select-option>
+    <tmd-select-option key="4" value="Malaysia"></tmd-select-option>
+    <tmd-select-option key="5" value="Goa"></tmd-select-option>
+    <tmd-select-option key="6" value="Thailand"></tmd-select-option>
+</tmd-select>

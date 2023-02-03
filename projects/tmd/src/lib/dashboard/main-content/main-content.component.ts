@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { TmdPopoverService } from '../../core/services/tmd-component.service';
+import { TestComponent } from '../../components/test/test.component';
+import { TmdModalService } from '../../core/services';
+import { TmdPopoverService } from '../../core/services/tmd-popover.service';
 
 @Component({
   selector: 'tmd-main-content',
@@ -7,9 +9,13 @@ import { TmdPopoverService } from '../../core/services/tmd-component.service';
   styleUrls: ['./main-content.component.css'],
 })
 export class MainContentComponent {
-  constructor(private tmdPopOverService: TmdPopoverService) { }
+  constructor(private tmdPopOverService: TmdPopoverService, private tmdModalService: TmdModalService) { }
 
   closeModal() {
     this.tmdPopOverService.close();
+  }
+
+  openModal() {
+    this.tmdModalService.open<TestComponent>(TestComponent);
   }
 }

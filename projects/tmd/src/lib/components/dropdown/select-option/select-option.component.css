@@ -1,0 +1,29 @@
+:host {
+    display: block;
+    padding: 0 0.875rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    color: #333;
+    background-color: red;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    cursor: pointer;
+}
+
+:host.selected{
+    color: #0079cc;
+    background-color: #eee;
+    font-weight: bold;
+
+}
+
+:host.selected:hover{
+    background-color: #eee;
+}
+
+:host:hover{
+    outline: none;
+    background-color: #eee;
+}
